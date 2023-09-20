@@ -9,8 +9,8 @@ export function Home() {
     return (
         <SafeAreaView>
             <Header />
-            <ScrollView>
             <Stories />
+            <ScrollView>
                 {POSTS.map((post, index) => (
                     <Post post={post} key={index} />
                 ))}
