@@ -1,11 +1,12 @@
 import React from "react";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, FlatList } from "react-native";
 import { Divider } from 'react-native-elements';
 
 interface PostProps {
   post: {
     imageURL: string;
     user: string;
+    profilepic: string;
   };
 }
 
@@ -17,7 +18,7 @@ const Post: React.FC<PostProps> = ({ post }) => {
         orientation="vertical"
         style={{ marginBottom: 5 }} />
       <PostHeader post={post} />
-
+      <PostImage post={post}/>
     </View>
   )
 }
@@ -33,7 +34,7 @@ const PostHeader: React.FC<PostProps> = ({ post }) => {
       }}
     >
       <Image
-        source={{ uri: post.imageURL }}
+        source={{ uri: post.profilepic }}
         style=
         {{
           width: 35,
@@ -57,6 +58,17 @@ const PostHeader: React.FC<PostProps> = ({ post }) => {
         </View>
     </View>
   );
+}
+
+const PostImage: React.FC<PostProps> = ({ post }) => {
+  return(
+    <View style={{ width: '100%', height: 450 }}>
+    <Image 
+    source={{ uri: post.imageURL}}
+    style={{ height: '100%', resizeMode: 'cover', marginRight: 5 }}
+    />
+    </View>
+  )
 }
 
 export default Post

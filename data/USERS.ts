@@ -18,5 +18,5 @@ export const USERS = [
     {
         user: 'chloe',
         image: 'https://biofabrica.com.mx/wp-content/uploads/rounded-profile-pic_transparent.png'
-    },
+    }
 ]
