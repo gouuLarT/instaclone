@@ -78,7 +78,7 @@ const PostImage: React.FC<PostProps> = ({ post }) => {
 const PostIcons = [
   {
     name: 'Like',
-    imageurl: require('../../assets/Lİke.png')
+    imageurl: require('../../assets/Like.png')
   },
   {
     name: 'Comment',

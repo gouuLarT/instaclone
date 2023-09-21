@@ -5,9 +5,9 @@ export const POSTS = [
         imageURL: 'https://i.pinimg.com/564x/f1/ea/c3/f1eac3f5ca4193759e66b5e96127a887.jpg',
         user: USERS[0].user,
         likes: 7840,
-        caption: 'Train Ride to Hogwarts',
+        caption: 'Navigating the digital realm, one keystroke at a time.',
         profilepic: USERS[0].image,
-        coments: [
+        comments: [
             {
                 user: 'eve',
                 comment: 'Wow, amazing!'
@@ -25,14 +25,14 @@ export const POSTS = [
         likes: 7840,
         caption: 'Train Ride to Hogwarts',
         profilepic: USERS[0].image,
-        coments: [
+        comment: [
             {
                 user: 'eve',
-                comment: 'Wow, amazing!'
+                comments: 'Wow, amazing!'
             },
             {
                 user: 'zoe',
-                comment: 'Hey! Really cool'
+                comments: 'Hey! Really cool'
             }
         ]
         
@@ -43,7 +43,7 @@ export const POSTS = [
         likes: 7840,
         caption: 'Train Ride to Hogwarts',
         profilepic: USERS[0].image,
-        coments: [
+        comments: [
             {
                 user: 'eve',
                 comment: 'Wow, amazing!'
