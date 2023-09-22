@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, Image, TouchableOpacity, ImageSourcePropType } from "react-native";
 import { Divider } from 'react-native-elements';
 
@@ -8,6 +8,9 @@ interface PostProps {
     user: string;
     profilepic: string;
     imageurl: string;
+    likes: number;
+    caption: string;
+    comments: string | { user: string; comment: string }[];
   };
 }
 
@@ -20,8 +23,13 @@ const Post: React.FC<PostProps> = ({ post }) => {
         style={{ marginBottom: 5 }} />
       <PostHeader post={post} />
       <PostImage post={post} />
-      <View style={{ marginTop: 10 }}>
+      <View style={{ marginTop: 15 }}>
         <PostFooter post={post} />
+        <View style={{ marginLeft: 10 }}>
+          <Likes post={post} />
+          <Caption post={post} />
+          <CommentSection post={post} />
+        </View>
       </View>
     </View>
   )
@@ -96,8 +104,8 @@ const PostIcons = [
 
 const PostFooter: React.FC<PostProps> = ({ post }) => {
   return (
-    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-      <View style={{ flexDirection: 'row'}}>
+    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginLeft: 10 }}>
+      <View style={{ flexDirection: 'row' }}>
         <Icon imageurl={PostIcons[0].imageurl} />
         <Icon imageurl={PostIcons[1].imageurl} />
         <Icon imageurl={PostIcons[2].imageurl} />
@@ -123,5 +131,54 @@ const Icon = ({ imageurl }: { imageurl: ImageSourcePropType }) => (
   </TouchableOpacity>
 )
 
+const Likes: React.FC<PostProps> = ({ post }) => {
+  return (
+    <View style={{ flexDirection: 'row', marginTop: 10 }}>
+      <Text style={{ fontWeight: '500' }}>{post.likes.toString()} likes</Text>
+    </View>
+  )
+}
 
-export default Post
+const Caption: React.FC<PostProps> = ({ post }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const toggleText = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  const maxLength = 70;
+  return (
+    <View style={{ flexDirection: 'row', marginTop: 5 }}>
+      <Text style={{ marginRight: 5, fontWeight: 'bold' }}>
+        {post.user}
+      </Text>
+      <Text numberOfLines={isExpanded ? 0 : 2}>
+        {isExpanded ? post.caption : (post.caption.length > maxLength ? post.caption.substring(0, maxLength) + "..." : post.caption)}
+      </Text>
+      {post.caption.length > maxLength && (
+        <TouchableOpacity onPress={toggleText}>
+          <Text style={{ color: 'blue' }}>{isExpanded ? "Less" : "More"}</Text>
+        </TouchableOpacity>
+      )}
+    </View>
+  );
+};
+
+const CommentSection: React.FC<PostProps> = ({ post }) => {
+  if (post.comments && post.comments.length > 0) {
+    return (
+      <View style={{ marginTop: 5 }}>
+        <TouchableOpacity>
+        <Text style={{ color: '#00000080' }}>
+          View {post.comments.length > 1 ? 'all' : ''} {post.comments.length}
+          {post.comments.length > 1 ? ' comments' : 'comment'}
+        </Text>
+        </TouchableOpacity>
+      </View>
+    );
+  } else {
+    return null;
+  }
+}
+
+export default Post;

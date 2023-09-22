@@ -1,63 +1,51 @@
-import { View, TouchableOpacity, Image, ImageSourcePropType } from 'react-native';
-import React, { useState } from 'react';
-import { StyleSheet } from 'react-native';
+import React, { useState } from "react";
+import { TouchableOpacity, Image, View } from "react-native";
+import style from "./styles";
+import { Divider } from "react-native-elements";
 
-export const bottomTabIcons = [
+export const BottomTabsIcon = [
   {
     name: 'Home',
-    active: require('../../assets/HomeActive.png') as ImageSourcePropType,
-    inactive: require('../../assets/Home.png') as ImageSourcePropType
+    active: require('../../assets/HomeActive.png'),
+    inactive: require('../../assets/Home.png')
   },
   {
     name: 'Search',
-    active: require('../../assets/SearchActive.png') as ImageSourcePropType,
-    inactive: require('../../assets/Search.png') as ImageSourcePropType
+    active: require('../../assets/SearchActive.png'),
+    inactive: require('../../assets/Search.png')
   },
   {
     name: 'Reels',
-    active: require('../../assets/Reels.png') as ImageSourcePropType,
-    inactive: require('../../assets/ReelsActive.png') as ImageSourcePropType  // Use a imagem correta para a inativa
+    active: require('../../assets/ReelsActive.png'),
+    inactive: require('../../assets/Reels.png')
   },
   {
     name: 'Like',
-    active: require('../../assets/LikeActive.png') as ImageSourcePropType,
-    inactive: require('../../assets/Like.png') as ImageSourcePropType
-  },
+    active: require('../../assets/LikeActive.png'),
+    inactive: require('../../assets/Like.png')
+  }
 ]
 
-interface BottomProps {
-  icons: {
-    active: ImageSourcePropType;
-    inactive: ImageSourcePropType;
-    name: string;
-  }[];
-}
+export function BottomTabs() {
+  const [activeTab, setActiveTab] = useState("Home")
 
-const BottomTabs: React.FC<BottomProps> = ({ icons }) => {
-  const [activeTab, setActiveTab] = useState('[]')
+  const handleTabChange = (tabName: React.SetStateAction<string>) => {
+    setActiveTab(tabName);
+  };
 
   return (
-    <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-      {icons.map((icon, index) => (
-        <TouchableOpacity
-          key={index}
-          onPress={() => setActiveTab(icon.name)}
-        >
+    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginRight: 30, marginTop: 10, marginBottom: 15, marginLeft: 20 }}>
+      {BottomTabsIcon.map((tab, index) => (
+        <TouchableOpacity key={index} onPress={() => handleTabChange(tab.name)}>
           <Image
-            source={activeTab === icon.name ? icon.active : icon.inactive}
-            style={styles.icon}
+            source={activeTab === tab.name ? tab.active : tab.inactive}
+            style={style.icons}
           />
         </TouchableOpacity>
       ))}
+
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  icon: {
-    width: 25,
-    height: 25,
-  }
-})
 
 export default BottomTabs
