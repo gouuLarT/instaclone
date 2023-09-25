@@ -1,8 +1,14 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { View, Image, TextInput, Text } from "react-native";
+import { useNavigation } from '@react-navigation/native'
 
-export function LogIn() {
+export function LogIn({}) {
+
+  function handleLogin(){
+    
+  }
+
   return (
     <View style={{ alignItems: 'center' }}>
       <Image
@@ -20,7 +26,7 @@ export function LogIn() {
       <TouchableOpacity>
         <Text style={styles.forgot}>Forgot password?</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Log in</Text>
       </TouchableOpacity>
 

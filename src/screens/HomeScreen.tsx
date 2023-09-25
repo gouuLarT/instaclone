@@ -4,6 +4,7 @@ import { Header } from "../components/Header";
 import { Stories } from "../components/Stories";
 import Post from "../components/Post";
 import { POSTS } from "../../data/POST";
+import BottomTabs from "../components/BottomTabs";
 
 export function Home() {
   return (
