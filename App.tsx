@@ -1,7 +1,5 @@
-import { Divider } from 'react-native-elements';
-import BottomTabs from './src/components/BottomTabs';
-import { Home } from './src/screens/HomeScreen';
 import { View, StatusBar } from 'react-native';
+import { LogIn } from './src/screens/LogIn';
 
 export default function App() {
   return (
@@ -9,11 +7,7 @@ export default function App() {
       <StatusBar
         backgroundColor='black'
         barStyle='light-content' />
-      <Home />
-      <Divider 
-      width={0.2}
-      />
-      <BottomTabs />
+        <LogIn />
     </View>
   );
 }
