@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { View, Text, Image, TouchableOpacity, ImageSourcePropType } from "react-native";
+import { View, Text, Image, TouchableOpacity, ImageSourcePropType, Modal } from "react-native";
 import { Divider } from 'react-native-elements';
+import styles from "./styles";
 
 interface PostProps {
   post: {
@@ -15,6 +16,7 @@ interface PostProps {
 }
 
 const Post: React.FC<PostProps> = ({ post }) => {
+
   return (
     <View style={{ marginLeft: 10 }}>
       <Divider
@@ -164,15 +166,35 @@ const Caption: React.FC<PostProps> = ({ post }) => {
   );
 };
 
+const CommentsModal = () => {
+  const [modalActive, setModalActive] = useState(false);
+
+  return (
+    <View style={styles.containerModal}>
+      <Modal
+        animationType="fade"
+        onRequestClose={() => setModalActive(false)}
+        transparent={true}
+        visible={modalActive}
+      >
+        <View style={styles.outerView}>
+          <View style={styles.modalView}></View>
+        </View>
+      </Modal>
+    </View>
+  )
+}
+
 const CommentSection: React.FC<PostProps> = ({ post }) => {
+
   if (post.comments && post.comments.length > 0) {
     return (
       <View style={{ marginTop: 5 }}>
         <TouchableOpacity>
-        <Text style={{ color: '#00000080' }}>
-          View {post.comments.length > 1 ? 'all' : ''} {post.comments.length}
-          {post.comments.length > 1 ? ' comments' : 'comment'}
-        </Text>
+          <Text style={{ color: '#00000080' }}>
+            View {post.comments.length > 1 ? 'all' : ''} {post.comments.length}
+            {post.comments.length > 1 ? ' comments' : 'comment'}
+          </Text>
         </TouchableOpacity>
       </View>
     );
