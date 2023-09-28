@@ -4,7 +4,6 @@ import * as Font from 'expo-font';
 import { Routes } from './src/routes';
 import LoadingIndicator from './src/components/Loading';
 
-
 export default function App() {
   const [fontsLoaded] = Font.useFonts({})
 

@@ -1,17 +1,16 @@
 import { SafeAreaView, ScrollView, View } from "react-native";
 import * as React from "react";
-import { Header } from "../components/Header";
+import { Header } from "../components/HomeHeader";
 import { Stories } from "../components/Stories";
 import Post from "../components/Post";
 import { POSTS } from "../../data/POST";
-import BottomTabs from "../components/BottomTabs";
 
-export function Home() {
+export function Home(post: any) {
   return (
       <ScrollView>
         <Header />
         <Stories />
-        {POSTS.map((post, index) => (
+        {POSTS.map((post: any, index) => (
           <Post post={post} key={index} />
         ))}
       </ScrollView>

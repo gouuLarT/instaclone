@@ -1,17 +1,25 @@
 import React, { useState } from "react";
-import { View, Text, Image, TouchableOpacity, ImageSourcePropType, Modal } from "react-native";
+import { View, Text, Image, TouchableOpacity, ImageSourcePropType, Modal, FlatList } from "react-native";
 import { Divider } from 'react-native-elements';
+import UserPhoto from "../UserPhoto";
 import styles from "./styles";
 
-interface PostProps {
+export interface Comment {
+  text: string;
+  user: string;
+  profilepic: string;
+}
+
+export interface PostProps {
   post: {
+    bio: string;
     imageURL: string;
     user: string;
     profilepic: string;
     imageurl: string;
     likes: number;
     caption: string;
-    comments: string | { user: string; comment: string }[];
+    comment: string | { user: string; comment: string }[];
   };
 }
 
@@ -47,28 +55,18 @@ const PostHeader: React.FC<PostProps> = ({ post }) => {
         margin: 5
       }}
     >
-      <Image
-        source={{ uri: post.profilepic }}
-        style=
-        {{
-          width: 35,
-          height: 35,
-          borderWidth: 1,
-          borderColor: '#F7A34B',
-          borderRadius: 50,
-        }}
-      />
+      <UserPhoto post={post} />
       <Text
         style=
         {{
-          color: 'black',
+          color: '#262626',
           fontWeight: '600',
-          paddingRight: 280
+          paddingRight: 290
         }}
       >{post.user}
       </Text>
       <View>
-        <Text style={{ color: 'black', fontWeight: '900', marginRight: 8 }}>...</Text>
+        <Text style={{ color: '#262626', fontWeight: '900', marginRight: 8 }}>...</Text>
       </View>
     </View>
   );
@@ -166,41 +164,60 @@ const Caption: React.FC<PostProps> = ({ post }) => {
   );
 };
 
-const CommentsModal = () => {
+const CommentSection: React.FC<PostProps> = ({ post }) => {
   const [modalActive, setModalActive] = useState(false);
 
-  return (
-    <View style={styles.containerModal}>
-      <Modal
-        animationType="fade"
-        onRequestClose={() => setModalActive(false)}
-        transparent={true}
-        visible={modalActive}
-      >
-        <View style={styles.outerView}>
-          <View style={styles.modalView}></View>
-        </View>
-      </Modal>
-    </View>
-  )
-}
+  const openModal = () => {
+    setModalActive(true);
+  };
 
-const CommentSection: React.FC<PostProps> = ({ post }) => {
+  const closeModal = () => {
+    setModalActive(false);
+  };
 
-  if (post.comments && post.comments.length > 0) {
+  const comments = post.comment;
+
+  if (comments && comments.length > 0) {
     return (
       <View style={{ marginTop: 5 }}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={openModal}>
           <Text style={{ color: '#00000080' }}>
-            View {post.comments.length > 1 ? 'all' : ''} {post.comments.length}
-            {post.comments.length > 1 ? ' comments' : 'comment'}
+            View {comments.length > 1 ? 'all' : ''} {comments.length}
+            {comments.length > 1 ? ' comments' : ' comment'}
           </Text>
         </TouchableOpacity>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalActive}
+          onRequestClose={closeModal}
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <FlatList
+                data={comments as unknown as Comment[]}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({ item }) => (
+
+                  <View style={styles.commentsContainer}>
+                    <UserPhoto post={post} />
+                    <Text style={styles.userNameModal}>{item.user}</Text>
+                    <Text style={styles.textCommentModal}>{item.text}</Text>
+                  </View>
+                )}
+              />
+              <TouchableOpacity onPress={closeModal} style={styles.closeModal}>
+              <Image source={require('../../assets/ModalClose.png')} style={styles.closeModal}/>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
       </View>
     );
   } else {
     return null;
   }
-}
+};
+
 
 export default Post;
